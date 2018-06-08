@@ -5,7 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 
 public class Player {
-    private static MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer = null;
 
     private static final int STOP = 0;
     private static final int PLAY = 1;
@@ -15,6 +15,10 @@ public class Player {
     private static int status = EMPTY;
 
     public static void set(Context context, Uri uri){
+        if(status != EMPTY){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
         mediaPlayer = MediaPlayer.create(context , uri);
         status = STOP;
     }
