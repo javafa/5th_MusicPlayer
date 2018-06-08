@@ -68,7 +68,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
             setDuration();
         }
         private void setAlbumart(){
-            //albumart.setImageURI(music.albumart_uri);
+            albumart.setImageURI(music.albumart_uri);
         }
         private void setTitle(){
             title.setText(music.title);
