@@ -43,6 +43,8 @@ public class MusicLoader {
                     music.artist = getColumnString(cursor,projections[2]);
                     music.albumart_id = getColumnString(cursor,projections[3]);
                     music.duration = getColumnLong(cursor,projections[4]);
+                    music.setMusicURI();
+                    music.setAlbumArt();
                     musicList.add(music);
                 }
             }

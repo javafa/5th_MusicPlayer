@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.kodonho.android.musicplayer.R;
 import com.kodonho.android.musicplayer.domain.Music;
+import com.kodonho.android.musicplayer.domain.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
             duration.setText(music.duration+"");
         }
         private void play(Context context){
-
+            Player.set(context, music.music_uri);
+            Player.play();
         }
     }
 }
