@@ -26,7 +26,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init() {
-        mediaScan();
+        // mediaScan(); HTC, 에뮬레이터와 같이 예외적인 상황에서만 사용
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
         List<Music> musicList = MusicLoader.getMusic(this);

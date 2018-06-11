@@ -14,13 +14,16 @@ import com.kodonho.android.musicplayer.R;
 import com.kodonho.android.musicplayer.domain.Music;
 import com.kodonho.android.musicplayer.domain.Player;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
     List<Music> musicList;
+    SimpleDateFormat sdf;
     public MusicAdapter(List<Music> musicList){
         this.musicList = musicList;
+        sdf = new SimpleDateFormat("mm:ss");
     }
     @NonNull
     @Override
@@ -44,7 +47,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
     public class Holder extends RecyclerView.ViewHolder{
         private ImageView albumart;
         private TextView title,artist,duration;
-        private ImageButton play;
         private Music music;
         public Holder(View itemView) {
             super(itemView);
@@ -52,11 +54,10 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
             title = itemView.findViewById(R.id.textTitle);
             artist = itemView.findViewById(R.id.textArtist);
             duration = itemView.findViewById(R.id.textDuration);
-            play = itemView.findViewById(R.id.btnPlay);
-            play.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    play(v.getContext());
+
                 }
             });
         }
@@ -77,13 +78,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
             artist.setText(music.artist);
         }
         private void setDuration(){
-            String m = "";
-            String s = "";
-            duration.setText(music.duration+"");
-        }
-        private void play(Context context){
-            Player.set(context, music.music_uri);
-            Player.play();
+            duration.setText(sdf.format(music.duration));
         }
     }
 }
