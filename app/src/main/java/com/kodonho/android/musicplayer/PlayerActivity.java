@@ -74,10 +74,32 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         setCurrent(0);
         setDuration(music.duration);
         Player.set(this, music.music_uri);
+        // seekbar 세팅
+        seekBar.setMax((int)music.duration);
+        Player.setSeekbar(new Player.SeekbarCallback(){
+            @Override
+            public void setSeekbar(final int position) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        seekBar.setProgress(position);
+                        setCurrent(position);
+                    }
+                });
+            }
+        });
+        // 플레이 상태에 따라 자동재생
+        if(Player.status == Player.PLAY) {
+            Player.play();
+        }else if(Player.status == Player.EMPTY || Player.status == Player.PAUSE){
+            Player.status = Player.STOP;
+        }
     }
+
     private void setCurrent(long current){
         textCurrent.setText(sdf.format(current));
     }
+
     private void setDuration(long duration){
         textDuration.setText(sdf.format(duration));
     }
@@ -93,15 +115,20 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
                     btnPlay.setImageResource(android.R.drawable.ic_media_play);
                     Player.pause();
                 }
-
                 break;
             case R.id.btnFf:
                 break;
             case R.id.btnRew:
                 break;
             case R.id.btnNext:
+                if(position < data.size()-1)
+                    position++;
+                viewPager.setCurrentItem(position);
                 break;
             case R.id.btnPrev:
+                if(position > 0)
+                    position--;
+                viewPager.setCurrentItem(position);
                 break;
         }
     }
@@ -111,7 +138,6 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         seekBar = findViewById(R.id.seekBar);
         textCurrent = findViewById(R.id.textCurrent);
         textDuration = findViewById(R.id.textDuration);
-
 
         btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(this);
