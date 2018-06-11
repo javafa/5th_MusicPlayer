@@ -39,6 +39,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Music music = musicList.get(position);
         holder.setMusic(music);
+        holder.position = position;
     }
 
     @Override
@@ -47,9 +48,11 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-        private ImageView albumart;
-        private TextView title,artist,duration;
-        private Music music;
+        ImageView albumart;
+        TextView title,artist,duration;
+        Music music;
+        int position;
+
         public Holder(View itemView) {
             super(itemView);
             albumart = itemView.findViewById(R.id.imgAlbumart);
@@ -60,6 +63,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), PlayerActivity.class);
+                    intent.putExtra(PlayerActivity.POSITION, position);
                     v.getContext().startActivity(intent);
                 }
             });
