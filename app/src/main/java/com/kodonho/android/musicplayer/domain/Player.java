@@ -7,12 +7,12 @@ import android.net.Uri;
 public class Player {
     private static MediaPlayer mediaPlayer = null;
 
-    private static final int STOP = 0;
-    private static final int PLAY = 1;
-    private static final int PAUSE = 2;
-    private static final int EMPTY = 99;
+    public static final int STOP = 0;
+    public static final int PLAY = 1;
+    public static final int PAUSE = 2;
+    public static final int EMPTY = 99;
 
-    private static int status = EMPTY;
+    public static int status = EMPTY;
 
     public static void set(Context context, Uri uri){
         if(status != EMPTY){
