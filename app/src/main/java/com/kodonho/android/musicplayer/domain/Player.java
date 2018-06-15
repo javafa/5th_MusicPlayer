@@ -48,6 +48,12 @@ public class Player {
         }
     }
 
+    public static void stop() {
+        if(mediaPlayer != null){
+            mediaPlayer.stop();
+            status = STOP;
+        }
+    }
     public static long getCurrent(){
         if(mediaPlayer != null)
             return mediaPlayer.getCurrentPosition();
