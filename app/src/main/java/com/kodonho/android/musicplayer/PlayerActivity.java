@@ -29,8 +29,10 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
     SeekBar seekBar;
     TextView textCurrent,textDuration;
     ImageButton btnPlay;
-
     SimpleDateFormat sdf;
+
+    Intent playService;
+    // boolean isService = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         data = MusicLoader.getMusic(this);
         adapter = new PlayerAdapter(data);
         viewPager.setAdapter(adapter);
+        // 서비스 인텐트 미리 만들기
+        playService = new Intent(this, PlayerService.class);
 
         Intent intent = getIntent();
         position = intent.getIntExtra(POSITION, 0);
@@ -109,11 +113,14 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         switch(v.getId()){
             case R.id.btnPlay:
                 if(Player.status == Player.STOP || Player.status == Player.PAUSE) {
+                    playService.setAction(PlayerService.PLAY);
+                    startService(playService);
                     btnPlay.setImageResource(android.R.drawable.ic_media_pause);
-                    Player.play();
+
                 }else if(Player.status == Player.PLAY) {
                     btnPlay.setImageResource(android.R.drawable.ic_media_play);
-                    Player.pause();
+                    playService.setAction(PlayerService.PAUSE);
+                    startService(playService);
                 }
                 break;
             case R.id.btnFf:
